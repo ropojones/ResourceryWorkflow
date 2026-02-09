@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './sidebar.component.scss',
 })
 export class ResourcerySidebarComponent {
-  @Input() collapsed = true;
-  @Input() showSearch = true;
+  @Input() collapsed = false;
+  @Input() showSearch = false;
 }

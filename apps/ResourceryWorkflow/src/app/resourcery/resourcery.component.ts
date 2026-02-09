@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './resourcery.component.scss'
 })
 export class ResourceryComponent {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

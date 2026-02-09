@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './directorate-layout.component.scss'
 })
 export class DirectorateLayoutComponent {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

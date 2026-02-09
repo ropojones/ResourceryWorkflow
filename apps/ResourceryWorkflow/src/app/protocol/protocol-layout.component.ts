@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './protocol-layout.component.scss'
 })
 export class ProtocolLayoutComponent {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

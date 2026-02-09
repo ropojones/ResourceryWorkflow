@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './translation-layout.component.scss'
 })
 export class TranslationLayoutComponent {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './interpretation-layout.component.scss'
 })
 export class InterpretationLayoutComponent {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

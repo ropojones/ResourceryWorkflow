@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './conference-layout.component.scss'
 })
 export class ConferenceLayoutComponent {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

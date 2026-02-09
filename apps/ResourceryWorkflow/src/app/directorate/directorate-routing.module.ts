@@ -11,6 +11,10 @@ import { ContributionReportsComponent } from './contribution-reports/contributio
 import { ConceptNotesComponent } from './concept-notes/concept-notes.component';
 import { InternalMeetingsComponent } from './internal-meetings/internal-meetings.component';
 import { DocumentationComponent } from './documentation/documentation.component';
+import { ApprovedRequestsComponent } from './approved-requests/approved-requests.component';
+import { InProcessRequestsComponent } from './in-process-requests/in-process-requests.component';
+import { RejectedRequestsComponent } from './rejected-requests/rejected-requests.component';
+import { SlaComponent } from './sla/sla.component';
 
 const routes: Routes = [
   {
@@ -26,7 +30,11 @@ const routes: Routes = [
       { path: 'contribution-reports', component: ContributionReportsComponent, data: { title: 'Contribution Reports' } },
       { path: 'concept-notes', component: ConceptNotesComponent, data: { title: 'Concept Notes' } },
       { path: 'internal-meetings', component: InternalMeetingsComponent, data: { title: 'Internal Meetings' } },
-      { path: 'documentation', component: DocumentationComponent, data: { title: 'Documentation' } }
+      { path: 'documentation', component: DocumentationComponent, data: { title: 'Documentation' } },
+      { path: 'approved-requests', component: ApprovedRequestsComponent, data: { title: 'Approved Requests' } },
+      { path: 'in-process-requests', component: InProcessRequestsComponent, data: { title: 'In Process Requests' } },
+      { path: 'rejected-requests', component: RejectedRequestsComponent, data: { title: 'Rejected Requests' } },
+      { path: 'sla', component: SlaComponent, data: { title: 'SLA' } }
     ]
   }
 ];

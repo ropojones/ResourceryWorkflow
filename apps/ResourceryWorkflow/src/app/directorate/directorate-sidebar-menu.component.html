@@ -4,8 +4,8 @@
     title="{{ 'Workflow::Dashboard' | abpLocalization }}">
     <!-- <i class="fa fa-border-all" aria-hidden="true"></i> -->
     <span class="text-bold">
-     <strong> {{ 'Workflow::Directorate' | abpLocalization }} <br/>
-      Conference and Protocol</strong>
+      <strong> {{ 'Workflow::Directorate' | abpLocalization }} <br />
+        {{ 'Workflow::OfficeOfTheDirector' | abpLocalization }}</strong>
     </span>
   </a>
 
@@ -70,16 +70,39 @@
     </span>
   </a>
 
-  <!-- 
-    <div class="qt-nav-section">Pipeline</div>
-    <a class="qt-nav-item" routerLink="/directorate/internal-memoranda" routerLinkActive="active"
-      title="{{ 'Workflow::ApprovedRequests' | abpLocalization }}">
-      <i class="fa fa-memo" aria-hidden="true"></i>
-      <span>
-        {{ 'Workflow::ApprovedRequests' | abpLocalization }}
-      </span>
-    </a>
-    <div class="qt-nav-section">Team</div> 
-  -->
 
+  <div class="qt-nav-section">Pipeline</div>
+  <a class="qt-nav-item" routerLink="/directorate/approved-requests" routerLinkActive="active"
+    title="{{ 'Workflow::ApprovedRequests' | abpLocalization }}">
+    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+    <span>
+      {{ 'Workflow::ApprovedRequests' | abpLocalization }}
+    </span>
+  </a>
+  <a class="qt-nav-item" routerLink="/directorate/in-process-requests" routerLinkActive="active"
+    title="{{ 'Workflow::InProcessRequests' | abpLocalization }}">
+    <i class="fa fa-spinner" aria-hidden="true"></i>
+    <span>
+      {{ 'Workflow::InProcessRequests' | abpLocalization }}
+    </span>
+  </a>
+  <a class="qt-nav-item" routerLink="/directorate/rejected-requests" routerLinkActive="active"
+    title="{{ 'Workflow::RejectedRequests' | abpLocalization }}">
+    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+    <span>
+      {{ 'Workflow::RejectedRequests' | abpLocalization }}
+    </span>
+  </a>
+  <a class="qt-nav-item" routerLink="/directorate/sla" routerLinkActive="active"
+    title="{{ 'Workflow::SLA' | abpLocalization }}">
+    <i class="fa fa-balance-scale" aria-hidden="true"></i>
+    <span>
+      {{ 'Workflow::SLA' | abpLocalization }}
+    </span>
+  </a>
+  <div class="qt-nav-section">Team</div>
+  <a class="qt-nav-item" href="javascript:void(0)">
+    <i class="fa fa-cog" aria-hidden="true"></i>
+    <span>{{ 'Workflow::Settings' | abpLocalization }}</span>
+  </a>
 </nav>

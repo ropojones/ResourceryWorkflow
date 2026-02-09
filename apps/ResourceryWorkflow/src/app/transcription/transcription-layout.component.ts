@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './transcription-layout.component.scss'
 })
 export class TranscriptionLayoutComponent {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

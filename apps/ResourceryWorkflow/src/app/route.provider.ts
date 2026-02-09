@@ -24,7 +24,7 @@ function configureRoutes(routesService: RoutesService) {
       },
       {
         path: '/dashboard',
-        name: 'Workflow::ServiceRequests',
+        name: 'Workflow::ServiceCenters',
         iconClass: '',
         order: 2,
         layout: eLayoutType.application,
@@ -32,23 +32,16 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/directorate',
         name: 'Workflow::Directorate',
-        parentName: 'Workflow::ServiceRequests',
+        parentName: 'Workflow::ServiceCenters',
         iconClass: '',
         order: 0,
         layout: eLayoutType.application,
       },
-       {
-        path: '/directorate/internal-memoranda',
-        name: 'Workflow::InternalMemoranda',
-        parentName: 'Workflow::Directorate',
-        iconClass: '',
-        order: 1,
-        layout: eLayoutType.application,
-      },
+       
       {
         path: '/translation',
         name: 'Workflow::Translation',
-        parentName: 'Workflow::ServiceRequests',
+        parentName: 'Workflow::ServiceCenters',
         iconClass: '',
         order: 1,
         layout: eLayoutType.application,
@@ -56,7 +49,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/interpretation',
         name: 'Workflow::Interpretation',
-        parentName: 'Workflow::ServiceRequests',
+        parentName: 'Workflow::ServiceCenters',
         iconClass: '',
         order: 2,
         layout: eLayoutType.application,
@@ -64,7 +57,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/conference',
         name: 'Workflow::Conference',
-        parentName: 'Workflow::ServiceRequests',
+        parentName: 'Workflow::ServiceCenters',
         iconClass: '',
         order: 3,
         layout: eLayoutType.application,
@@ -72,7 +65,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/protocol',
         name: 'Workflow::Protocol',
-        parentName: 'Workflow::ServiceRequests',
+        parentName: 'Workflow::ServiceCenters',
         iconClass: '',
         order: 4,
         layout: eLayoutType.application,
@@ -80,7 +73,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/transcription',
         name: 'Workflow::Transcription',
-        parentName: 'Workflow::ServiceRequests',
+        parentName: 'Workflow::ServiceCenters',
         iconClass: '',
         order: 5,
         layout: eLayoutType.application,
@@ -88,7 +81,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/support',
         name: 'Workflow::Support',
-        order: 4,
+        order: 3,
         layout: eLayoutType.application,
       },
 
