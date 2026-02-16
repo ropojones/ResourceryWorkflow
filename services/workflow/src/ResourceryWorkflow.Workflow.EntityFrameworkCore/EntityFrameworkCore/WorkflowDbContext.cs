@@ -17,6 +17,8 @@ public class WorkflowDbContext(DbContextOptions<WorkflowDbContext> options)
 
     public DbSet<Service> Services { get; set; }
 
+    public DbSet<ServiceRelation> ServiceRelations { get; set; }
+
     public DbSet<Request> Requests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)

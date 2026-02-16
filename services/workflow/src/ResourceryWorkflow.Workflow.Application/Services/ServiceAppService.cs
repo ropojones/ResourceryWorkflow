@@ -58,6 +58,10 @@ public class ServiceAppService : WorkflowAppService, IServiceAppService
             input.Name,
             input.Code,
             input.Description,
+            input.Activities,
+            input.Outcomes,
+            input.Details,
+            input.HasChecklist,
             input.DefaultSlaHours,
             input.IsActive
         );
@@ -76,6 +80,10 @@ public class ServiceAppService : WorkflowAppService, IServiceAppService
         service.SetName(input.Name);
         service.SetCode(input.Code);
         service.SetDescription(input.Description);
+        service.SetActivities(input.Activities);
+        service.SetOutcomes(input.Outcomes);
+        service.SetDetails(input.Details);
+        service.SetHasChecklist(input.HasChecklist);
         service.SetDefaultSlaHours(input.DefaultSlaHours);
 
         if (input.IsActive)

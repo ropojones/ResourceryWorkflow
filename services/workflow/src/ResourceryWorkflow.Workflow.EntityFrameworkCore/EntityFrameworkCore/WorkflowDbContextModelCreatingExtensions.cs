@@ -35,10 +35,35 @@ public static class WorkflowDbContextModelCreatingExtensions
             b.Property(x => x.Name).IsRequired().HasMaxLength(ServiceConsts.MaxNameLength);
             b.Property(x => x.Code).IsRequired().HasMaxLength(ServiceConsts.MaxCodeLength);
             b.Property(x => x.Description).HasMaxLength(ServiceConsts.MaxDescriptionLength);
+            b.Property(x => x.Activities).HasMaxLength(ServiceConsts.MaxActivitiesLength);
+            b.Property(x => x.Outcomes).HasMaxLength(ServiceConsts.MaxOutcomesLength);
+            b.Property(x => x.Details).HasMaxLength(ServiceConsts.MaxDetailsLength);
+            b.Property(x => x.HasChecklist).HasDefaultValue(false);
 
-            b.HasIndex(x => new { x.DepartmentId, x.Code }).IsUnique();
+            b.HasIndex(x => x.Code).IsUnique();
             b.HasIndex(x => x.DepartmentId);
             b.HasIndex(x => x.Name);
+        });
+
+        builder.Entity<ServiceRelation>(b =>
+        {
+            b.ToTable(WorkflowDbProperties.DbTablePrefix + "ServiceRelations", WorkflowDbProperties.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.ServiceId).IsRequired();
+            b.Property(x => x.RelatedServiceId).IsRequired();
+
+            b.HasIndex(x => new { x.ServiceId, x.RelatedServiceId }).IsUnique();
+
+            b.HasOne<Service>()
+                .WithMany(x => x.RelatedServices)
+                .HasForeignKey(x => x.ServiceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne<Service>()
+                .WithMany()
+                .HasForeignKey(x => x.RelatedServiceId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         builder.Entity<Request>(b =>
@@ -55,7 +80,6 @@ public static class WorkflowDbContextModelCreatingExtensions
             b.Property(x => x.Priority).IsRequired();
 
             b.HasIndex(x => x.ServiceId);
-            b.HasIndex(x => x.DepartmentId);
             b.HasIndex(x => x.Status);
             b.HasIndex(x => x.CreationTime);
         });

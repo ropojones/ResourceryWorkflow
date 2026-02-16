@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -6,6 +9,8 @@ namespace ResourceryWorkflow.Workflow.Services;
 
 public class Service : FullAuditedAggregateRoot<Guid>
 {
+    private readonly List<ServiceRelation> _relatedServices = new();
+
     public Guid DepartmentId { get; private set; }
 
     public string Name { get; private set; }
@@ -14,9 +19,19 @@ public class Service : FullAuditedAggregateRoot<Guid>
 
     public string Description { get; private set; }
 
+    public string Activities { get; private set; }
+
+    public string Outcomes { get; private set; }
+
+    public string Details { get; private set; }
+
+    public bool HasChecklist { get; private set; }
+
     public bool IsActive { get; private set; }
 
     public int? DefaultSlaHours { get; private set; }
+
+    public IReadOnlyCollection<ServiceRelation> RelatedServices => new ReadOnlyCollection<ServiceRelation>(_relatedServices);
 
     private Service()
     {
@@ -28,6 +43,10 @@ public class Service : FullAuditedAggregateRoot<Guid>
         string name,
         string code,
         string description,
+        string activities,
+        string outcomes,
+        string details,
+        bool hasChecklist = false,
         int? defaultSlaHours = null,
         bool isActive = true)
         : base(EnsureNotEmpty(id, nameof(id)))
@@ -36,6 +55,10 @@ public class Service : FullAuditedAggregateRoot<Guid>
         SetName(name);
         SetCode(code);
         SetDescription(description);
+        SetActivities(activities);
+        SetOutcomes(outcomes);
+        SetDetails(details);
+        SetHasChecklist(hasChecklist);
         SetDefaultSlaHours(defaultSlaHours);
         IsActive = isActive;
     }
@@ -60,6 +83,26 @@ public class Service : FullAuditedAggregateRoot<Guid>
         Description = Check.Length(description, nameof(description), ServiceConsts.MaxDescriptionLength);
     }
 
+    public void SetActivities(string activities)
+    {
+        Activities = Check.Length(activities, nameof(activities), ServiceConsts.MaxActivitiesLength);
+    }
+
+    public void SetOutcomes(string outcomes)
+    {
+        Outcomes = Check.Length(outcomes, nameof(outcomes), ServiceConsts.MaxOutcomesLength);
+    }
+
+    public void SetDetails(string details)
+    {
+        Details = Check.Length(details, nameof(details), ServiceConsts.MaxDetailsLength);
+    }
+
+    public void SetHasChecklist(bool hasChecklist)
+    {
+        HasChecklist = hasChecklist;
+    }
+
     public void SetDefaultSlaHours(int? defaultSlaHours)
     {
         if (defaultSlaHours.HasValue)
@@ -78,6 +121,34 @@ public class Service : FullAuditedAggregateRoot<Guid>
     public void Deactivate()
     {
         IsActive = false;
+    }
+
+    public void AddRelatedService(Guid relatedServiceId)
+    {
+        EnsureNotEmpty(relatedServiceId, nameof(relatedServiceId));
+
+        if (relatedServiceId == Id)
+        {
+            throw new ArgumentException("Related service cannot be the same as the current service.", nameof(relatedServiceId));
+        }
+
+        if (_relatedServices.Any(item => item.RelatedServiceId == relatedServiceId))
+        {
+            return;
+        }
+
+        _relatedServices.Add(new ServiceRelation(Guid.NewGuid(), Id, relatedServiceId));
+    }
+
+    public void RemoveRelatedService(Guid relatedServiceId)
+    {
+        var existing = _relatedServices.FirstOrDefault(item => item.RelatedServiceId == relatedServiceId);
+        if (existing is null)
+        {
+            return;
+        }
+
+        _relatedServices.Remove(existing);
     }
 
     public static Guid EnsureNotEmpty(Guid id, string paramName)

@@ -1,0 +1,57 @@
+:host {
+  display: block;
+}
+
+.qt-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qt-nav-section {
+  margin-top: 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--qt-sidebar-muted);
+  letter-spacing: 1px;
+}
+
+.qt-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  color: var(--qt-sidebar-text);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.qt-nav-item i {
+  width: 20px;
+}
+
+.qt-nav-item:hover,
+.qt-nav-item.active {
+  background: var(--qt-sidebar-hover);
+  color: var(--qt-sidebar-active-text);
+}
+
+:host-context(.qt-sidebar) .qt-nav-item,
+:host-context(.qt-sidebar) .qt-nav-item i,
+:host-context(.qt-sidebar) .qt-nav-section {
+  color: #ffffff;
+}
+
+:host-context(.qt-sidebar.is-collapsed) .qt-nav-item span,
+:host-context(.qt-sidebar.is-collapsed) .qt-nav-section {
+  display: none;
+}
+
+:host-context(.qt-sidebar.is-collapsed) .qt-nav-item {
+  justify-content: center;
+}
+
+:host-context(.qt-sidebar.is-collapsed) .qt-nav-item i {
+  margin: 0;
+}
