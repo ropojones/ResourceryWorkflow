@@ -12,21 +12,55 @@ public class WorkflowPermissionDefinitionProvider : PermissionDefinitionProvider
             WorkflowPermissions.GroupName,
             L("Permission:Workflow")
         );
-        var workflowPermissions = workflowGroup.AddPermission(
-            WorkflowPermissions.Issues.Default,
-            L("Permission:Workflow:Issues")
+        var departments = workflowGroup.AddPermission(
+            WorkflowPermissions.Departments.Default,
+            L("Permission:Workflow:Departments")
         );
-        workflowPermissions.AddChild(
-            WorkflowPermissions.Issues.Create,
-            L("Permission:Workflow:Issues:Create")
+        departments.AddChild(
+            WorkflowPermissions.Departments.Create,
+            L("Permission:Workflow:Departments:Create")
         );
-        workflowPermissions.AddChild(
-            WorkflowPermissions.Issues.Update,
-            L("Permission:Workflow:Issues:Update")
+        departments.AddChild(
+            WorkflowPermissions.Departments.Update,
+            L("Permission:Workflow:Departments:Update")
         );
-        workflowPermissions.AddChild(
-            WorkflowPermissions.Issues.Delete,
-            L("Permission:Workflow:Issues:Delete")
+        departments.AddChild(
+            WorkflowPermissions.Departments.Delete,
+            L("Permission:Workflow:Departments:Delete")
+        );
+
+        var services = workflowGroup.AddPermission(
+            WorkflowPermissions.Services.Default,
+            L("Permission:Workflow:Services")
+        );
+        services.AddChild(
+            WorkflowPermissions.Services.Create,
+            L("Permission:Workflow:Services:Create")
+        );
+        services.AddChild(
+            WorkflowPermissions.Services.Update,
+            L("Permission:Workflow:Services:Update")
+        );
+        services.AddChild(
+            WorkflowPermissions.Services.Delete,
+            L("Permission:Workflow:Services:Delete")
+        );
+
+        var requests = workflowGroup.AddPermission(
+            WorkflowPermissions.Requests.Default,
+            L("Permission:Workflow:Requests")
+        );
+        requests.AddChild(
+            WorkflowPermissions.Requests.Create,
+            L("Permission:Workflow:Requests:Create")
+        );
+        requests.AddChild(
+            WorkflowPermissions.Requests.Update,
+            L("Permission:Workflow:Requests:Update")
+        );
+        requests.AddChild(
+            WorkflowPermissions.Requests.Delete,
+            L("Permission:Workflow:Requests:Delete")
         );
     }
 

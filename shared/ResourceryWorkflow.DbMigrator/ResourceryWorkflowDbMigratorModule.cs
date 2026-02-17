@@ -4,6 +4,7 @@ using ResourceryWorkflow.IdentityService;
 using ResourceryWorkflow.IdentityService.EntityFrameworkCore;
 using ResourceryWorkflow.SaaS;
 using ResourceryWorkflow.SaaS.EntityFrameworkCore;
+using ResourceryWorkflow.Workflow.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Modularity;
@@ -19,6 +20,7 @@ namespace ResourceryWorkflow.DbMigrator;
 [DependsOn(typeof(IdentityServiceApplicationContractsModule))]
 [DependsOn(typeof(SaaSEntityFrameworkCoreModule))]
 [DependsOn(typeof(SaaSApplicationContractsModule))]
+[DependsOn(typeof(WorkflowEntityFrameworkCoreModule))]
 //[DependsOn(typeof(WebAppEntityFrameworkCoreModule))]
 //[DependsOn(typeof(WebAppApplicationContractsModule))]
 public class ResourceryWorkflowDbMigratorModule : AbpModule

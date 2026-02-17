@@ -8,10 +8,10 @@
     creates the output directory based on the service name.
 
 .PARAMETER Name
-    The full service name in format 'CompanyName.ServiceName' (e.g., ResourceryHR.Recruitment)
+    The full service name in format 'CompanyName.ServiceName' (e.g., ResourceryWorkflow.Recruitment)
 
 .EXAMPLE
-    .\new-abp-service.ps1 ResourceryHR.Recruitment
+    .\new-abp-service.ps1 ResourceryWorkflow.Recruitment
     Creates a 'recruitment' directory with the service structure.
 #>
 
@@ -25,7 +25,7 @@ param(
 
 # Validate the name format
 if ($Name -notmatch '^[A-Z][a-zA-Z0-9]*\.[A-Z][a-zA-Z0-9]*$') {
-    Write-Error "The name must be in format 'CompanyName.ServiceName' (e.g., ResourceryHR.Recruitment)"
+    Write-Error "The name must be in format 'CompanyName.ServiceName' (e.g., ResourceryWorkflow.Recruitment)"
     exit 1
 }
 

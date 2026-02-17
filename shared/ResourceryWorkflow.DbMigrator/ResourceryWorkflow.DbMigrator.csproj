@@ -27,8 +27,8 @@
         <ProjectReference Include="..\..\services\administration\src\ResourceryWorkflow.Administration.EntityFrameworkCore\ResourceryWorkflow.Administration.EntityFrameworkCore.csproj" />
         <ProjectReference Include="..\..\services\identity\src\ResourceryWorkflow.IdentityService.Application.Contracts\ResourceryWorkflow.IdentityService.Application.Contracts.csproj" />
         <ProjectReference Include="..\..\services\identity\src\ResourceryWorkflow.IdentityService.EntityFrameworkCore\ResourceryWorkflow.IdentityService.EntityFrameworkCore.csproj" />
-        <ProjectReference Include="..\..\services\projects\src\ResourceryWorkflow.Projects.Application.Contracts\ResourceryWorkflow.Projects.Application.Contracts.csproj" />
-        <ProjectReference Include="..\..\services\projects\src\ResourceryWorkflow.Projects.EntityFrameworkCore\ResourceryWorkflow.Projects.EntityFrameworkCore.csproj" />
+        <ProjectReference Include="..\..\services\workflow\src\ResourceryWorkflow.Workflow.Application.Contracts\ResourceryWorkflow.Workflow.Application.Contracts.csproj" />
+        <ProjectReference Include="..\..\services\workflow\src\ResourceryWorkflow.Workflow.EntityFrameworkCore\ResourceryWorkflow.Workflow.EntityFrameworkCore.csproj" />
         <ProjectReference Include="..\..\services\saas\src\ResourceryWorkflow.SaaS.Application.Contracts\ResourceryWorkflow.SaaS.Application.Contracts.csproj" />
         <ProjectReference Include="..\..\services\saas\src\ResourceryWorkflow.SaaS.EntityFrameworkCore\ResourceryWorkflow.SaaS.EntityFrameworkCore.csproj" />
         <ProjectReference Include="..\ResourceryWorkflow.Microservice.Shared\ResourceryWorkflow.Microservice.Shared.csproj" />

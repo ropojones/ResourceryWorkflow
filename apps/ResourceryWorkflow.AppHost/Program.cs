@@ -28,7 +28,7 @@ internal class Program
             )
             .WithReference(adminDb)
             .WithReference(identityDb)
-        //    .WithReference(projectsDb)
+            .WithReference(workflowDb)
             .WithReference(saasDb)
             .WithReference(seq)
             .WaitFor(postgres);

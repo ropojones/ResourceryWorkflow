@@ -1,0 +1,40 @@
+<div class="home-bg">
+
+    <div class="home-container">
+        <div class="row home-row container pt-5">
+            <div>
+                <div>
+                    <h1 class="home-title">
+                        {{ 'Workflow::Integrated' | abpLocalization }}
+                    </h1>
+                    <div class="text-wrap" style="width: 45rem;">
+                        <h2 class="home-subtitle">{{ 'Workflow::WorkflowSystem' | abpLocalization }}</h2>
+
+                    </div>
+                    <div class="text-wrap" style="width: 45rem;">
+                        <p class="home-description">{{ 'Workflow::WorkflowDescription' | abpLocalization }} </p>
+
+                    </div>
+                    <!-- <button class="home-button" (click)="navigateToDashboard()">{{ 'Workflow::GetStarted' |
+                        abpLocalization }}</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-footer">
+        <div class="container">
+
+            <a href="#" class="text-bold text-decoration-none fs-6 fw-normal text-primary-emphasis">
+                &copy;2026 Directrorate of Conference and Protocol, ECOWAS Commission.
+            </a>
+            <a href="" class="text-bold text-decoration-none fs-6 fw-normal text-primary-emphasis"
+                (click)="changeLanguage('en', $event)">EN</a>
+            <a href="" class="text-bold text-decoration-none fs-6 fw-normal text-primary-emphasis"
+                (click)="changeLanguage('fr', $event)">FR</a>
+            <a href="" class="text-bold text-decoration-none fs-6 fw-normal text-primary-emphasis"
+                (click)="changeLanguage('pt-BR', $event)">PT</a>
+
+        </div>
+    </div>
+</div>
