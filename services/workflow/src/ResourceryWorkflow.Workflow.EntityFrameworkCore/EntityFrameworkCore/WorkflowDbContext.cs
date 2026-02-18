@@ -3,8 +3,8 @@ using Microsoft.Extensions.Hosting;
 using ResourceryWorkflow.Workflow.Departments;
 using ResourceryWorkflow.Workflow.Requests;
 using ResourceryWorkflow.Workflow.Services;
-
 using ResourceryWorkflow.Workflow.Workflows;
+using Workflow = ResourceryWorkflow.Workflow.Workflows.Workflow;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -23,7 +23,7 @@ public class WorkflowDbContext(DbContextOptions<WorkflowDbContext> options)
 
     public DbSet<Request> Requests { get; set; }
 
-    public DbSet<Workflow> Workflows { get; set; }
+    public DbSet<global::ResourceryWorkflow.Workflow.Workflows.Workflow> Workflows { get; set; }
     public DbSet<WorkflowStep> WorkflowSteps { get; set; }
     public DbSet<RequestWorkflow> RequestWorkflows { get; set; }
     public DbSet<RequestWorkflowStep> RequestWorkflowSteps { get; set; }

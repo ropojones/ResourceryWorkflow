@@ -32,5 +32,7 @@ public class WorkflowEntityFrameworkCoreModule : AbpModule
         {
             options.AddDefaultRepositories(true);
         });
+        
+        
+        }
     }
-}

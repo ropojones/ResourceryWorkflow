@@ -25,13 +25,25 @@ public class WorkflowDbContextFactory : IDesignTimeDbContextFactory<WorkflowDbCo
 
     private static IConfigurationRoot BuildConfiguration()
     {
+        // Try the default relative path first (used in some environments)
+        var defaultHostPath = Path.Combine(
+            Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName,
+            $"host{Path.DirectorySeparatorChar}ResourceryWorkflow.Workflow.HttpApi.Host"
+        );
+
+        string hostPath;
+        if (Directory.Exists(defaultHostPath))
+        {
+            hostPath = defaultHostPath;
+        }
+        else
+        {
+            // Fallback to the path under services/workflow/host when running tools from solution root
+            hostPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "services", "workflow", "host", "ResourceryWorkflow.Workflow.HttpApi.Host"));
+        }
+
         var builder = new ConfigurationBuilder()
-            .SetBasePath(
-                Path.Combine(
-                    Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName,
-                    $"host{Path.DirectorySeparatorChar}ResourceryWorkflow.Workflow.HttpApi.Host"
-                )
-            )
+            .SetBasePath(hostPath)
             .AddJsonFile("appsettings.json", false);
 
         return builder.Build();

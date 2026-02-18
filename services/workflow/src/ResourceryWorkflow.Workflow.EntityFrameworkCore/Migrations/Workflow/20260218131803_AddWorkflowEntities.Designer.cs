@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ResourceryWorkflow.Workflow.EntityFrameworkCore;
@@ -9,12 +10,14 @@ using Volo.Abp.EntityFrameworkCore;
 
 #nullable disable
 
-namespace ResourceryWorkflow.Workflow.Migrations
+namespace ResourceryWorkflow.Workflow.Migrations.Workflow
 {
     [DbContext(typeof(WorkflowDbContext))]
-    partial class WorkflowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260218131803_AddWorkflowEntities")]
+    partial class AddWorkflowEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

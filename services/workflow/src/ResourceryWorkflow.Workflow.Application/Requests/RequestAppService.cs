@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ResourceryWorkflow.Workflow.Departments;
 using ResourceryWorkflow.Workflow.Services;
+using ResourceryWorkflow.Workflow.Workflows;
+using ResourceryWorkflow.Workflow.Workflows.Repositories;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Linq;
@@ -17,15 +19,27 @@ public class RequestAppService : WorkflowAppService, IRequestAppService
     private readonly IRepository<Request, Guid> _requestRepository;
     private readonly IRepository<Department, Guid> _departmentRepository;
     private readonly IRepository<Service, Guid> _serviceRepository;
+    private readonly IWorkflowRepository _workflowRepository;
+    private readonly IWorkflowStepRepository _workflowStepRepository;
+    private readonly IRequestWorkflowRepository _requestWorkflowRepository;
+    private readonly IRequestWorkflowStepRepository _requestWorkflowStepRepository;
 
     public RequestAppService(
         IRepository<Request, Guid> requestRepository,
         IRepository<Department, Guid> departmentRepository,
-        IRepository<Service, Guid> serviceRepository)
+        IRepository<Service, Guid> serviceRepository,
+        IWorkflowRepository workflowRepository,
+        IWorkflowStepRepository workflowStepRepository,
+        IRequestWorkflowRepository requestWorkflowRepository,
+        IRequestWorkflowStepRepository requestWorkflowStepRepository)
     {
         _requestRepository = requestRepository;
         _departmentRepository = departmentRepository;
         _serviceRepository = serviceRepository;
+        _workflowRepository = workflowRepository;
+        _workflowStepRepository = workflowStepRepository;
+        _requestWorkflowRepository = requestWorkflowRepository;
+        _requestWorkflowStepRepository = requestWorkflowStepRepository;
     }
 
     public async Task<RequestDto> GetAsync(Guid id)
@@ -66,6 +80,27 @@ public class RequestAppService : WorkflowAppService, IRequestAppService
         );
 
         await _requestRepository.InsertAsync(request, autoSave: true);
+
+        // If an active workflow exists for the service, create a request workflow and its steps
+        var workflow = await _workflowRepository.FirstOrDefaultAsync(w => w.ServiceId == input.ServiceId && w.IsActive);
+        if (workflow != null)
+        {
+            var requestWorkflow = new RequestWorkflow(GuidGenerator.Create(), request.Id, workflow.Id);
+            await _requestWorkflowRepository.InsertAsync(requestWorkflow, autoSave: true);
+
+            var workflowSteps = await _workflowStepRepository.GetListAsync(w => w.WorkflowId == workflow.Id);
+            var ordered = workflowSteps.OrderBy(s => s.Order).ToList();
+            foreach (var step in ordered)
+            {
+                var rwStep = new RequestWorkflowStep(GuidGenerator.Create(), requestWorkflow.Id, step.Id, null);
+                await _requestWorkflowStepRepository.InsertAsync(rwStep, autoSave: true);
+            }
+
+            requestWorkflow.SetCurrentStep(ordered.FirstOrDefault()?.Id);
+            requestWorkflow.Start();
+            await _requestWorkflowRepository.UpdateAsync(requestWorkflow, autoSave: true);
+        }
+
         var dto = ObjectMapper.Map<Request, RequestDto>(request);
         await PopulateDisplayNamesAsync(new List<RequestDto> { dto });
 
