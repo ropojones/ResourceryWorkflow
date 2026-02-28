@@ -14,13 +14,16 @@ export const environment = {
     redirectUri: baseUrl,
     clientId: 'ResourceryWorkflow_Platform',
     responseType: 'code',
-    scope: 'ResourceryWorkflowWorkflow ResourceryWorkflowIdentityService ResourceryWorkflowAdministration ResourceryWorkflowSaaS',
+    scope: 'ResourceryWorkflowWorkflow ResourceryWorkflowAuthServer ResourceryWorkflowIdentityService ResourceryWorkflowAdministration ResourceryWorkflowSaaS',
     requireHttps: false,
   },
   apis: {
     default: {
-      url: 'https://localhost:7500',
+      url: 'https://localhost:7004',
       rootNamespace: 'ResourceryWorkflow',
     },
+  },
+  localization: {
+    defaultResourceName: "Workflow",
   },
 } as Environment;

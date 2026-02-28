@@ -3,7 +3,7 @@ import { Environment } from '@abp/ng.core';
 const baseUrl = 'http://localhost:4200';
 
 export const environment = {
-  production: false,
+  production: true,
   application: {
     baseUrl,
     name: 'ResourceryWorkflow',
@@ -13,9 +13,10 @@ export const environment = {
     issuer: 'https://localhost:7600/',
     redirectUri: baseUrl,
     clientId: 'ResourceryWorkflow_Platform',
+    clientSecret: '1q2w3e*',
     responseType: 'code',
-    scope: 'ResourceryWorkflowWorkflow ResourceryWorkflowIdentityService ResourceryWorkflowAdministration ResourceryWorkflowSaaS',
-    requireHttps: false,
+    scope: 'offline_access ResourceryWorkflowWorkflow ResourceryWorkflowWorkflow ResourceryWorkflowAuthServer ResourceryWorkflowIdentityService ResourceryWorkflowAdministration ResourceryWorkflowSaaS',
+    requireHttps: true,
   },
   apis: {
     default: {
