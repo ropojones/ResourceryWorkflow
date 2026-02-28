@@ -4,9 +4,7 @@ namespace ResourceryWorkflow.Workflow.Requests;
 
 public class CreateUpdateRequestDto
 {
-    public Guid DepartmentId { get; set; }
-
-    public Guid ServiceId { get; set; }
+    public Guid RequestTypeId { get; set; }
 
     public Guid RequestedByUserId { get; set; }
 

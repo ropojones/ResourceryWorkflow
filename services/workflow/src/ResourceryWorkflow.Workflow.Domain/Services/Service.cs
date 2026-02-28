@@ -19,17 +19,6 @@ public class Service : FullAuditedAggregateRoot<Guid>
 
     public string Description { get; private set; }
 
-    public string Activities { get; private set; }
-
-    public string Outcomes { get; private set; }
-
-    public string Details { get; private set; }
-
-    public bool HasChecklist { get; private set; }
-
-    public bool IsActive { get; private set; }
-
-    public int? DefaultSlaHours { get; private set; }
 
     public IReadOnlyCollection<ServiceRelation> RelatedServices => new ReadOnlyCollection<ServiceRelation>(_relatedServices);
 
@@ -42,25 +31,13 @@ public class Service : FullAuditedAggregateRoot<Guid>
         Guid departmentId,
         string name,
         string code,
-        string description,
-        string activities,
-        string outcomes,
-        string details,
-        bool hasChecklist = false,
-        int? defaultSlaHours = null,
-        bool isActive = true)
+        string description)
         : base(EnsureNotEmpty(id, nameof(id)))
     {
         SetDepartment(departmentId);
         SetName(name);
         SetCode(code);
         SetDescription(description);
-        SetActivities(activities);
-        SetOutcomes(outcomes);
-        SetDetails(details);
-        SetHasChecklist(hasChecklist);
-        SetDefaultSlaHours(defaultSlaHours);
-        IsActive = isActive;
     }
 
     public void SetDepartment(Guid departmentId)
@@ -81,46 +58,6 @@ public class Service : FullAuditedAggregateRoot<Guid>
     public void SetDescription(string description)
     {
         Description = Check.Length(description, nameof(description), ServiceConsts.MaxDescriptionLength);
-    }
-
-    public void SetActivities(string activities)
-    {
-        Activities = Check.Length(activities, nameof(activities), ServiceConsts.MaxActivitiesLength);
-    }
-
-    public void SetOutcomes(string outcomes)
-    {
-        Outcomes = Check.Length(outcomes, nameof(outcomes), ServiceConsts.MaxOutcomesLength);
-    }
-
-    public void SetDetails(string details)
-    {
-        Details = Check.Length(details, nameof(details), ServiceConsts.MaxDetailsLength);
-    }
-
-    public void SetHasChecklist(bool hasChecklist)
-    {
-        HasChecklist = hasChecklist;
-    }
-
-    public void SetDefaultSlaHours(int? defaultSlaHours)
-    {
-        if (defaultSlaHours.HasValue)
-        {
-            Check.Range(defaultSlaHours.Value, nameof(defaultSlaHours), 1, 24 * 30);
-        }
-
-        DefaultSlaHours = defaultSlaHours;
-    }
-
-    public void Activate()
-    {
-        IsActive = true;
-    }
-
-    public void Deactivate()
-    {
-        IsActive = false;
     }
 
     public void AddRelatedService(Guid relatedServiceId)

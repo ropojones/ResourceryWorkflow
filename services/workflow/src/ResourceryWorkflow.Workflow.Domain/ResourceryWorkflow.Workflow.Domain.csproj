@@ -16,7 +16,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="Data\json\WorkflowSeedData.json" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="Data\json\Department.json" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="Data\json\ServiceSeedData.json" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="Data\json\ServiceWorkflowSeedData.json" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="Data\json\ServiceWorkflowStepSeedData.json" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
 </Project>

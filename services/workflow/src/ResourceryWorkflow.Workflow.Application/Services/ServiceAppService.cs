@@ -57,13 +57,7 @@ public class ServiceAppService : WorkflowAppService, IServiceAppService
             input.DepartmentId,
             input.Name,
             input.Code,
-            input.Description,
-            input.Activities,
-            input.Outcomes,
-            input.Details,
-            input.HasChecklist,
-            input.DefaultSlaHours,
-            input.IsActive
+            input.Description
         );
 
         await _serviceRepository.InsertAsync(service, autoSave: true);
@@ -80,20 +74,6 @@ public class ServiceAppService : WorkflowAppService, IServiceAppService
         service.SetName(input.Name);
         service.SetCode(input.Code);
         service.SetDescription(input.Description);
-        service.SetActivities(input.Activities);
-        service.SetOutcomes(input.Outcomes);
-        service.SetDetails(input.Details);
-        service.SetHasChecklist(input.HasChecklist);
-        service.SetDefaultSlaHours(input.DefaultSlaHours);
-
-        if (input.IsActive)
-        {
-            service.Activate();
-        }
-        else
-        {
-            service.Deactivate();
-        }
 
         await _serviceRepository.UpdateAsync(service, autoSave: true);
         var dto = ObjectMapper.Map<Service, ServiceDto>(service);

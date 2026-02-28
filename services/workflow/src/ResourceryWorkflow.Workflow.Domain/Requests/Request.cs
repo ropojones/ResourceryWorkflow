@@ -6,9 +6,7 @@ namespace ResourceryWorkflow.Workflow.Requests;
 
 public class Request : FullAuditedAggregateRoot<Guid>
 {
-    public Guid DepartmentId { get; private set; }
-
-    public Guid ServiceId { get; private set; }
+    public Guid RequestTypeId { get; private set; }
 
     public Guid RequestedByUserId { get; private set; }
 
@@ -28,8 +26,7 @@ public class Request : FullAuditedAggregateRoot<Guid>
 
     public Request(
         Guid id,
-        Guid departmentId,
-        Guid serviceId,
+        Guid requestTypeId,
         Guid requestedByUserId,
         string title,
         string description,
@@ -37,8 +34,7 @@ public class Request : FullAuditedAggregateRoot<Guid>
         DateTime? targetCompletionTime = null)
         : base(EnsureNotEmpty(id, nameof(id)))
     {
-        SetDepartment(departmentId);
-        SetService(serviceId);
+        SetRequestType(requestTypeId);
         SetRequestedByUserId(requestedByUserId);
         SetTitle(title);
         SetDescription(description);
@@ -47,14 +43,9 @@ public class Request : FullAuditedAggregateRoot<Guid>
         Status = RequestStatus.Submitted;
     }
 
-    public void SetDepartment(Guid departmentId)
+    public void SetRequestType(Guid requestTypeId)
     {
-        DepartmentId = EnsureNotEmpty(departmentId, nameof(departmentId));
-    }
-
-    public void SetService(Guid serviceId)
-    {
-        ServiceId = EnsureNotEmpty(serviceId, nameof(serviceId));
+        RequestTypeId = EnsureNotEmpty(requestTypeId, nameof(requestTypeId));
     }
 
     public void SetRequestedByUserId(Guid requestedByUserId)

@@ -5,10 +5,21 @@
     "SamplePageMessage": "A sample page for the Workflow module",
     "WorkflowSystem": "Workflow Systems",
     "Workflows": "Workflows",
+    "WelcomeToResourcery": "Welcome to Resourcery",
+    "WelcomeToResourceryDecription": "Resourcery is a comprehensive workflow management system designed to streamline and optimize organizational processes. It offers a range of features including task automation, real-time collaboration, and performance analytics, enabling teams to work more efficiently and effectively. With Resourcery, organizations can enhance productivity, improve communication, and achieve better outcomes through seamless workflow orchestration.",
+
     "WorkflowDescription": "Supporting ERPs with custom apps and automated workflows for consistent, efficient processes.",
     "GetStarted": "Get Started",
     "Integrated": "Integrated",
     "Department": "Department",
+    "Operations": "Operations",
+    "OperationsDescription":"Manage the DCP operational workflows and internal services (Staff Only).",
+    "Services": "Services",
+    "ServicesDescription":"Make a service request/administrative instruction to the DCP for support and action.",
+    "ArtificialIntelligence": "Artificial Intelligence",
+    "IntegratedWorkflows": "Integrated Workflows",
+    "ProcessAutomation": "Process Automation",
+    "DigitalPlatforms": "Digital Platforms",
     "BC": "Booth Captain",
     "CA": "Conference Assistant",
     "CD": "Conference Division",
@@ -138,36 +149,29 @@
     "TranscriptionDocumentAlignmentOverview": "Alignment of Transcribed Document for Approved Requests",
     "TranscriberPayment": "Payment of Service Providers",
     "TranscriberPaymentOverview": "Processing of Payment for Freelance Transcribers",
-    
     "DirectorateServices": "Directorate Services",
     "TranslationServices": "Translation Services",
     "InterpretationServices": "Interpretation Services",
     "ConferenceServices": "Conference Services",
     "ProtocolServices": "Protocol Services",
     "TranscriptionServices": "Transcription Services",
-
     "DirectorateRequests": "Directorate Service Requests",
     "DirectorateRequestsOverview": "All Service Request - Directorate Services",
     "ConferenceRequests": "Conference Service Requests",
     "ConferenceRequestsOverview": "All Service Request - Conference Services",
     "ProtocolRequests": "Protocol Service Requests",
     "ProtocolRequestsOverview": "All Service Request - Protocol Services",
-
-"Permission:Workflow:Departments": "Departments",
-"Permission:Workflow:Departments:Create": "Create Departments",
-"Permission:Workflow:Departments:Update": "Update Departments",
-"Permission:Workflow:Departments:Delete": "Delete Departments",
-
-"Permission:Workflow:Requests": "Requests",
-"Permission:Workflow:Requests:Create": "Create Requests",
-"Permission:Workflow:Requests:Update": "Update Requests",
-"Permission:Workflow:Requests:Delete": "Delete Requests",
-
-"Permission:Workflow:Services": "Services",
-"Permission:Workflow:Services:Create": "Create Services",
-"Permission:Workflow:Services:Update": "Update Services",
-"Permission:Workflow:Services:Delete": "Delete Services"
-
-
+    "Permission:Workflow:Departments": "Departments",
+    "Permission:Workflow:Departments:Create": "Create Departments",
+    "Permission:Workflow:Departments:Update": "Update Departments",
+    "Permission:Workflow:Departments:Delete": "Delete Departments",
+    "Permission:Workflow:Requests": "Requests",
+    "Permission:Workflow:Requests:Create": "Create Requests",
+    "Permission:Workflow:Requests:Update": "Update Requests",
+    "Permission:Workflow:Requests:Delete": "Delete Requests",
+    "Permission:Workflow:Services": "Services",
+    "Permission:Workflow:Services:Create": "Create Services",
+    "Permission:Workflow:Services:Update": "Update Services",
+    "Permission:Workflow:Services:Delete": "Delete Services"
   }
 }

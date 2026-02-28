@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ResourceryWorkflow.Workflow.Departments;
 using ResourceryWorkflow.Workflow.Requests;
+using ResourceryWorkflow.Workflow.ServiceWorkflows;
 using ResourceryWorkflow.Workflow.Services;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
@@ -35,10 +36,6 @@ public static class WorkflowDbContextModelCreatingExtensions
             b.Property(x => x.Name).IsRequired().HasMaxLength(ServiceConsts.MaxNameLength);
             b.Property(x => x.Code).IsRequired().HasMaxLength(ServiceConsts.MaxCodeLength);
             b.Property(x => x.Description).HasMaxLength(ServiceConsts.MaxDescriptionLength);
-            b.Property(x => x.Activities).HasMaxLength(ServiceConsts.MaxActivitiesLength);
-            b.Property(x => x.Outcomes).HasMaxLength(ServiceConsts.MaxOutcomesLength);
-            b.Property(x => x.Details).HasMaxLength(ServiceConsts.MaxDetailsLength);
-            b.Property(x => x.HasChecklist).HasDefaultValue(false);
 
             b.HasIndex(x => x.Code).IsUnique();
             b.HasIndex(x => x.DepartmentId);
@@ -71,17 +68,61 @@ public static class WorkflowDbContextModelCreatingExtensions
             b.ToTable(WorkflowDbProperties.DbTablePrefix + "Requests", WorkflowDbProperties.DbSchema);
             b.ConfigureByConvention();
 
-            b.Property(x => x.DepartmentId).IsRequired();
-            b.Property(x => x.ServiceId).IsRequired();
+            b.Property(x => x.RequestTypeId).IsRequired();
             b.Property(x => x.RequestedByUserId).IsRequired();
             b.Property(x => x.Title).IsRequired().HasMaxLength(RequestConsts.MaxTitleLength);
             b.Property(x => x.Description).HasMaxLength(RequestConsts.MaxDescriptionLength);
             b.Property(x => x.Status).IsRequired();
             b.Property(x => x.Priority).IsRequired();
 
-            b.HasIndex(x => x.ServiceId);
+            b.HasIndex(x => x.RequestTypeId);
             b.HasIndex(x => x.Status);
             b.HasIndex(x => x.CreationTime);
+        });
+
+        builder.Entity<RequestType>(b =>
+        {
+            b.ToTable(WorkflowDbProperties.DbTablePrefix + "RequestTypes", WorkflowDbProperties.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name).IsRequired().HasMaxLength(RequestTypeConsts.MaxNameLength);
+            b.Property(x => x.Description).HasMaxLength(RequestTypeConsts.MaxDescriptionLength);
+
+            b.HasIndex(x => x.Name);
+        });
+
+        builder.Entity<ServiceWorkflow>(b =>
+        {
+            b.ToTable(WorkflowDbProperties.DbTablePrefix + "ServiceWorkflows", WorkflowDbProperties.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.ServiceId).IsRequired();
+            b.Property(x => x.Title).IsRequired().HasMaxLength(ServiceConsts.MaxNameLength);
+            b.Property(x => x.Description).HasMaxLength(ServiceConsts.MaxDescriptionLength);
+            b.Property(x => x.Activities).HasMaxLength(ServiceConsts.MaxActivitiesLength);
+            b.Property(x => x.Outcomes).HasMaxLength(ServiceConsts.MaxOutcomesLength);
+            b.Property(x => x.Details).HasMaxLength(ServiceConsts.MaxDetailsLength);
+            b.Property(x => x.HasChecklist).HasDefaultValue(false);
+
+            b.HasIndex(x => x.ServiceId);
+            b.HasIndex(x => x.Title);
+        });
+
+        builder.Entity<ServiceWorkflowStep>(b =>
+        {
+            b.ToTable(WorkflowDbProperties.DbTablePrefix + "ServiceWorkflowSteps", WorkflowDbProperties.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.ServiceWorkflowId).IsRequired();
+            b.Property(x => x.Title).IsRequired().HasMaxLength(ServiceConsts.MaxNameLength);
+            b.Property(x => x.Description).HasMaxLength(ServiceConsts.MaxDescriptionLength);
+            b.Property(x => x.Order).IsRequired();
+
+            b.HasIndex(x => x.ServiceWorkflowId);
+            b.HasOne<ServiceWorkflow>()
+                .WithMany(x => x.Steps)
+                .HasForeignKey(x => x.ServiceWorkflowId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

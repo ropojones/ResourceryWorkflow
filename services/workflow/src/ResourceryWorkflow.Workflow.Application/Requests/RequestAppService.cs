@@ -2,44 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ResourceryWorkflow.Workflow.Departments;
-using ResourceryWorkflow.Workflow.Services;
-using ResourceryWorkflow.Workflow.Workflows;
-using ResourceryWorkflow.Workflow.Workflows.Repositories;
+using ResourceryWorkflow.Workflow.Requests;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Linq;
 using Volo.Abp;
 
-namespace ResourceryWorkflow.Workflow.Requests;
+namespace ResourceryWorkflow.Workflow.Application.Requests;
 
 [RemoteService(IsEnabled = false)]
 public class RequestAppService : WorkflowAppService, IRequestAppService
 {
     private readonly IRepository<Request, Guid> _requestRepository;
-    private readonly IRepository<Department, Guid> _departmentRepository;
-    private readonly IRepository<Service, Guid> _serviceRepository;
-    private readonly IWorkflowRepository _workflowRepository;
-    private readonly IWorkflowStepRepository _workflowStepRepository;
-    private readonly IRequestWorkflowRepository _requestWorkflowRepository;
-    private readonly IRequestWorkflowStepRepository _requestWorkflowStepRepository;
+    private readonly IRepository<RequestType, Guid> _requestTypeRepository;
 
     public RequestAppService(
         IRepository<Request, Guid> requestRepository,
-        IRepository<Department, Guid> departmentRepository,
-        IRepository<Service, Guid> serviceRepository,
-        IWorkflowRepository workflowRepository,
-        IWorkflowStepRepository workflowStepRepository,
-        IRequestWorkflowRepository requestWorkflowRepository,
-        IRequestWorkflowStepRepository requestWorkflowStepRepository)
+        IRepository<RequestType, Guid> requestTypeRepository)
     {
         _requestRepository = requestRepository;
-        _departmentRepository = departmentRepository;
-        _serviceRepository = serviceRepository;
-        _workflowRepository = workflowRepository;
-        _workflowStepRepository = workflowStepRepository;
-        _requestWorkflowRepository = requestWorkflowRepository;
-        _requestWorkflowStepRepository = requestWorkflowStepRepository;
+        _requestTypeRepository = requestTypeRepository;
     }
 
     public async Task<RequestDto> GetAsync(Guid id)
@@ -70,8 +51,7 @@ public class RequestAppService : WorkflowAppService, IRequestAppService
     {
         var request = new Request(
             GuidGenerator.Create(),
-            input.DepartmentId,
-            input.ServiceId,
+            input.RequestTypeId,
             input.RequestedByUserId,
             input.Title,
             input.Description,
@@ -80,26 +60,6 @@ public class RequestAppService : WorkflowAppService, IRequestAppService
         );
 
         await _requestRepository.InsertAsync(request, autoSave: true);
-
-        // If an active workflow exists for the service, create a request workflow and its steps
-        var workflow = await _workflowRepository.FirstOrDefaultAsync(w => w.ServiceId == input.ServiceId && w.IsActive);
-        if (workflow != null)
-        {
-            var requestWorkflow = new RequestWorkflow(GuidGenerator.Create(), request.Id, workflow.Id);
-            await _requestWorkflowRepository.InsertAsync(requestWorkflow, autoSave: true);
-
-            var workflowSteps = await _workflowStepRepository.GetListAsync(w => w.WorkflowId == workflow.Id);
-            var ordered = workflowSteps.OrderBy(s => s.Order).ToList();
-            foreach (var step in ordered)
-            {
-                var rwStep = new RequestWorkflowStep(GuidGenerator.Create(), requestWorkflow.Id, step.Id, null);
-                await _requestWorkflowStepRepository.InsertAsync(rwStep, autoSave: true);
-            }
-
-            requestWorkflow.SetCurrentStep(ordered.FirstOrDefault()?.Id);
-            requestWorkflow.Start();
-            await _requestWorkflowRepository.UpdateAsync(requestWorkflow, autoSave: true);
-        }
 
         var dto = ObjectMapper.Map<Request, RequestDto>(request);
         await PopulateDisplayNamesAsync(new List<RequestDto> { dto });
@@ -111,8 +71,7 @@ public class RequestAppService : WorkflowAppService, IRequestAppService
     {
         var request = await _requestRepository.GetAsync(id);
 
-        request.SetDepartment(input.DepartmentId);
-        request.SetService(input.ServiceId);
+        request.SetRequestType(input.RequestTypeId);
         request.SetRequestedByUserId(input.RequestedByUserId);
         request.SetTitle(input.Title);
         request.SetDescription(input.Description);
@@ -138,25 +97,15 @@ public class RequestAppService : WorkflowAppService, IRequestAppService
             return;
         }
 
-        var departmentIds = dtos.Select(dto => dto.DepartmentId).Distinct().ToList();
-        var serviceIds = dtos.Select(dto => dto.ServiceId).Distinct().ToList();
-
-        var departments = await _departmentRepository.GetListAsync(x => departmentIds.Contains(x.Id));
-        var services = await _serviceRepository.GetListAsync(x => serviceIds.Contains(x.Id));
-
-        var departmentLookup = departments.ToDictionary(department => department.Id, department => department.Name);
-        var serviceLookup = services.ToDictionary(service => service.Id, service => service.Name);
+        var typeIds = dtos.Select(dto => dto.RequestTypeId).Distinct().ToList();
+        var types = await _requestTypeRepository.GetListAsync(x => typeIds.Contains(x.Id));
+        var lookup = types.ToDictionary(x => x.Id, x => x.Name);
 
         foreach (var dto in dtos)
         {
-            if (departmentLookup.TryGetValue(dto.DepartmentId, out var departmentName))
+            if (lookup.TryGetValue(dto.RequestTypeId, out var name))
             {
-                dto.DepartmentName = departmentName;
-            }
-
-            if (serviceLookup.TryGetValue(dto.ServiceId, out var serviceName))
-            {
-                dto.ServiceName = serviceName;
+                dto.RequestTypeName = name;
             }
         }
     }

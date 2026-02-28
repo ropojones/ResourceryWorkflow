@@ -5,13 +5,9 @@ namespace ResourceryWorkflow.Workflow.Requests;
 
 public class RequestDto : FullAuditedEntityDto<Guid>
 {
-    public Guid DepartmentId { get; set; }
+    public Guid RequestTypeId { get; set; }
 
-    public string DepartmentName { get; set; }
-
-    public Guid ServiceId { get; set; }
-
-    public string ServiceName { get; set; }
+    public string RequestTypeName { get; set; }
 
     public Guid RequestedByUserId { get; set; }
 
