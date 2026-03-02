@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('@abp/ng.account').then(m => m.AccountModule.forLazy()),
   },
   {
+    path: 'account/manage',
+    redirectTo: '/setting-management',
+    pathMatch: 'full',
+  },
+  {
     path: 'identity',
     loadChildren: () => import('@abp/ng.identity').then(m => m.IdentityModule.forLazy()),
   },

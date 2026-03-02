@@ -1,7 +1,9 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using ResourceryWorkflow.Administration.EntityFrameworkCore;
 using ResourceryWorkflow.IdentityService.EntityFrameworkCore;
@@ -113,6 +115,21 @@ public class ResourceryWorkflowAuthServerModule : AbpModule
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+        }
+
+        // Fix OpenIddict PostLogoutRedirectUris on startup
+        // Running synchronously to ensure it completes before the application fully initializes
+        try
+        {
+            using var scope = context.ServiceProvider.CreateScope();
+            var fixer = scope.ServiceProvider.GetRequiredService<OpenIddictClientFixer>();
+            var task = fixer.FixPostLogoutRedirectUrisAsync();
+            task.Wait(); // Synchronously wait for completion during startup initialization
+        }
+        catch (Exception ex)
+        {
+            var logger = context.ServiceProvider.GetRequiredService<ILogger<ResourceryWorkflowAuthServerModule>>();
+            logger.LogError(ex, "CRITICAL: Failed to fix OpenIddict PostLogoutRedirectUris on startup!");
         }
 
         app.UseAbpRequestLocalization();

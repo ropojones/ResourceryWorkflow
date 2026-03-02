@@ -23,5 +23,11 @@ export const environment = {
       url: 'https://localhost:7500',
       rootNamespace: 'ResourceryWorkflow',
     },
+    ResourceryWorkflowIdentityService: {
+      url: 'https://localhost:7500/api/identity',
+    },
+    ResourceryWorkflowAdministration: {
+      url: 'https://localhost:7500/api/administration',
+    },
   },
 } as Environment;

@@ -15,6 +15,14 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: '/account/manage',
+        name: 'AbpAccount::MyAccount',
+        iconClass: 'fa fa-user',
+        order: 100,
+        layout: eLayoutType.application,
+        requiredPolicy: 'AbpAccount.SettingManagement',
+      },
     ]);
   };
 }

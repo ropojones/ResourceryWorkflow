@@ -322,7 +322,13 @@ public class OpenIddictDataSeeder(
                             throw new BusinessException(L["InvalidRedirectUri", redirectUri]);
                         }
 
-                        if (application.RedirectUris.All(x => x != uri))
+                        // Use string comparison with OriginalString to properly detect duplicates
+                        // Do NOT normalize redirect URIs - accept them as-is to match OAuth client expectations
+                        var alreadyExists = application.RedirectUris.Any(x =>
+                            string.Equals(x.OriginalString, uri.OriginalString, StringComparison.OrdinalIgnoreCase)
+                        );
+
+                        if (!alreadyExists)
                         {
                             application.RedirectUris.Add(uri);
                         }
@@ -346,7 +352,13 @@ public class OpenIddictDataSeeder(
                             );
                         }
 
-                        if (application.PostLogoutRedirectUris.All(x => x != uri))
+                        // Use string comparison with OriginalString to properly detect duplicates
+                        // Accept both with and without trailing slashes as separate entries
+                        var alreadyExists = application.PostLogoutRedirectUris.Any(x =>
+                            string.Equals(x.OriginalString, uri.OriginalString, StringComparison.OrdinalIgnoreCase)
+                        );
+
+                        if (!alreadyExists)
                         {
                             application.PostLogoutRedirectUris.Add(uri);
                         }

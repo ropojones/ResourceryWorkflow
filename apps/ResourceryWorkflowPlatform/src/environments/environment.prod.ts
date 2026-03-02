@@ -12,6 +12,7 @@ export const environment = {
   oAuthConfig: {
     issuer: 'https://localhost:7600/',
     redirectUri: baseUrl,
+    postLogoutRedirectUri: 'http://localhost:4200/',
     clientId: 'ResourceryWorkflow_Platform',
     clientSecret: '1q2w3e*',
     responseType: 'code',
